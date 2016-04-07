@@ -1,68 +1,64 @@
- var express = require('express');
- var path = require('path');
- var cookieParser = require('cookie-parser');
- var bodyParser = require('body-parser');
- var routes = require('./routes/index');
- var users = require('./routes/users');
- var app = express();
+var app,
+    bodyParser,
+    cookieParser,
+    express,
+    http,
+    path,
+    port,
+    routes,
+    server,
+    users;
 
- // view engine setup
- app.set('views', path.join(__dirname, 'views'));
- app.set('view engine', 'jade');
+express = require('express');
+cookieParser = require('cookie-parser');
+bodyParser = require('body-parser');
+routes = require('./routes/index');
+users = require('./routes/users');
+http = require('http');
+path = require('path');
 
- app.use(bodyParser.json());
- app.use(bodyParser.urlencoded({ extended: false }));
- app.use(cookieParser());
- app.use(express.static(path.join(__dirname, 'public')));
+port = process.env.PORT || '3000';
 
- app.use('/', routes);
- app.use('/users', users);
+app = express();
 
- // Catch 404 and forward to error handler
- app.use(function(req, res, next) {
-   var err = new Error('Not Found');
-   err.status = 404;
-   next(err);
- });
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
- // error handlers
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
- // Development error handler
- // Will print stacktrace
- if (app.get('env') === 'development') {
-   app.use(function(err, req, res, next) {
-     res.status(err.status || 500);
-     res.render('error', {
-       message: err.message,
-       error: err
-     });
-   });
- }
+app.use('/', routes);
+app.use('/users', users);
 
- // production error handler
- // no stacktraces leaked to user
- app.use(function(err, req, res, next) {
-   res.status(err.status || 500);
-   res.render('error', {
-     message: err.message,
-     error: {}
-   });
- });
+// Catch 404 and forward to error handler
+app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
 
-var http = require('http');
-var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
-var server = http.createServer(app);
-server.listen(port);
-function normalizePort(val) {
-  var port = parseInt(val, 10);
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-  return false;
+// Development error handler
+if (app.get('env') === 'development') {
+    app.use(function (err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+    });
 }
+
+// Production error handler
+app.use(function (err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
+});
+
+app.set('port', port);
+server = http.createServer(app);
+server.listen(port);
