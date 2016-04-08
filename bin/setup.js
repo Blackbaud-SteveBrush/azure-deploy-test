@@ -41,6 +41,8 @@
         database.setup.adoptionStatus();
     });
 
+    console.log(process.env);
+
     // Create the administrators object.
     if (process.env.SITE_ADMINISTRATORS) {
         process.env.SITE_ADMINISTRATORS.split(',').forEach(function (email) {
