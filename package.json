@@ -1,11 +1,21 @@
 {
   "name": "capabilities-catalog",
   "version": "0.0.2",
+  "description": "A data-driven view for Blackbaud's Shared Capabilities Catalog.",
   "private": true,
   "scripts": {
     "start": "node ./bin/start.js",
     "setup": "node ./bin/setup.js"
   },
+  "author": "Blackbaud-SteveBrush",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blackbaud/capabilities-catalog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/blackbaud/capabilities-catalog/issues"
+  },
+  "homepage": "https://github.com/blackbaud/capabilities-catalog#readme",
   "dependencies": {
     "async": "^2.0.0-rc.3",
     "body-parser": "~1.13.2",

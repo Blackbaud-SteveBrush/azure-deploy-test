@@ -156,7 +156,7 @@ module.exports = function (grunt) {
         'sass',
         'cssmin',
         'copy',
-        //'watch'
+        'watch'
     ]);
 
     grunt.registerTask('default', 'build');

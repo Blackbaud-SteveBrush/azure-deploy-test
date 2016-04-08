@@ -12,9 +12,23 @@ exitWithMessageOnError () {
   if [ ! $? -eq 0 ]; then
     echo "An error has occurred during web site deployment."
     echo $1
+    notifySlack "Capabilities Catalog build error: $1"
     exit 1
   fi
 }
+
+# If specified, notifies the Slack API
+notifySlack() {
+  echo $1
+  if [[ -n $SLACK_WEBHOOK ]]; then
+    hook=$SLACK_WEBHOOK
+  else
+    hook="https://hooks.slack.com/services/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"
+  fi
+  curl -X POST --data-urlencode 'payload={"text":"['"$WEBSITE_SITE_NAME"'] '"$1"'"}' $hook
+}
+
+notifySlack "Capabilities Catalog build started."
 
 # Prerequisites
 # -------------
@@ -130,3 +144,4 @@ if [[ -n "$POST_DEPLOYMENT_ACTION" ]]; then
 fi
 
 echo "Finished successfully."
+notifySlack "Capabilities Catalog build successfully completed."
