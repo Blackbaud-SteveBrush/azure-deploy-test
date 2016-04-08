@@ -38,4 +38,4 @@ $ grunt build
 $ npm start
 ```
 
-- Go to [http://localhost:5000/](http://localhost:5000/).
+- Go to [http://localhost:5000/](http://localhost:3000/).
