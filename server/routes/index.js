@@ -1,12 +1,8 @@
 (function () {
     'use strict';
 
-    var express,
-        router,
-        routes;
+    var routes;
 
-    express = require('express');
-    router = express.Router();
     routes = {
         api: {}
     };
