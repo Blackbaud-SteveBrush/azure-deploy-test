@@ -1,0 +1,39 @@
+.form-horizontal {
+
+    > .form-group {
+        padding-bottom: 20px;
+
+        .btn-link {
+            margin-top: 7px;
+        }
+
+        .help-block {
+            margin-bottom: 0;
+        }
+
+        .form-group {
+            margin-left:0;
+            margin-right: 0;
+            margin-top: 7px;
+        }
+
+        .form-group-list-item {
+            background-color: #f5f5f5;
+            border-bottom: 1px solid #ddd;
+            padding: 20px;
+
+            + .btn {
+                margin-top: 20px;
+            }
+        }
+
+    }
+}
+
+.bb-modal .form-buttons {
+    display: none;
+}
+
+.form-control-markup {
+    font-family: monospace;
+}

@@ -1,0 +1,60 @@
+<h1>Shared Capabilities</h1>
+<p ng-if="::appCtrl.isAuthorized('CREATE_CAPABILITY_GROUP')">
+  <a class="btn btn-default" href ui-sref="capability-group-form"><i class="fa fa-plus"></i>Add Capability Group</a></span>
+</p>
+<ul class="table-list">
+  <li class="table-list-item" ng-repeat="capabilityGroup in ::listCtrl.capabilities" ng-if="::capabilityGroup.capabilities.length || appCtrl.isAuthorized('CREATE_PRODUCT')">
+    <div class="table-list-heading">
+      <h2 class="table-list-title" ng-bind="::capabilityGroup.name"></h2>
+      <div class="controls" ng-if="::appCtrl.isAuthorized('EDIT_CAPABILITY_GROUP') && capabilityGroup._id">
+        <a href ui-sref="capability-group-form(::{ capabilityGroupId: capabilityGroup._id })">Edit</a>
+      </div>
+      <p ng-if="::appCtrl.isAuthorized('CREATE_CAPABILITY')">
+        <a class="btn btn-default" href ui-sref="capability-form({ capabilityGroupId: capabilityGroup._id })"><i class="fa fa-plus"></i>Add Capability</a></span>
+      </p>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th class="name">
+              Capability Name
+            </th>
+            <th>
+              Capability Type
+            </th>
+            <th>
+              State
+            </th>
+            <th class="stats" colspan="2">
+              Products Adopting Capability
+            </th>
+          </tr>
+        </thead>
+        <tbody ng-sortable="capabilityGroup.sortConfig">
+          <tr ng-class="::{ draggable: appCtrl.isAuthorized('EDIT_CAPABILITY:FULL') && capabilityGroup._id }" ng-repeat="capability in capabilityGroup.capabilities">
+            <td class="name">
+              <a href ui-sref="capability(::{ capabilitySlug: capability.slug })" ng-bind="::capability.name"></a>
+            </td>
+            <td ng-bind="::capability.capabilityType"></td>
+            <td ng-bind="::capability.developmentState"></td>
+            <td class="stats">
+              <a class="chart" href ng-click="listCtrl.openModal('Products Adopting ' + capability.name, capability)">
+                <div ng-repeat="total in ::capability.totals" class="bar {{:: total.class }}" style="width:{{:: total.count * 40 }}px;" title="{{:: total.model.adoptionStatus.name }}">
+                </div>
+              </a>
+            </td>
+            <td class="controls" ng-if="::appCtrl.isAuthorized('EDIT_CAPABILITY:PARTIAL')">
+              <bb-context-menu>
+                <li>
+                  <a href ui-sref="capability-form(::{ capabilityId: capability._id })"><i class="fa fa-pencil"></i> Edit</a>
+                </li>
+              </bb-context-menu>
+              <span ng-if="::appCtrl.isAuthorized('EDIT_CAPABILITY:FULL') && capabilityGroup._id" class="handle" title="Order: {{capability.order}}"><i class="fa fa-sort"></i></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </li>
+</ul>

@@ -1,0 +1,9 @@
+.btn {
+    > .fa {
+        margin-right: 7px;
+        display: inline-block;
+    }
+    &.bb-context-menu-btn > .fa {
+        margin-right: 0;
+    }
+}

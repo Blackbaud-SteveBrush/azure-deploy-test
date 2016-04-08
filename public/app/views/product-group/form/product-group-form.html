@@ -1,0 +1,52 @@
+<div ng-if="::formCtrl.isReady">
+  <div ng-if="::formCtrl.isVisible" class="product-group-form-wrapper">
+    <div class="page-header" bb-scroll-into-view="formCtrl.scrollToTop">
+      <div class="controls">
+        <button ng-if="::formCtrl.formData._id && appCtrl.isAuthorized('DELETE_PRODUCT_GROUP')" class="btn btn-danger" type="button" cc-confirm-click data-confirmed-click="formCtrl.delete()"><i class="fa fa-trash"></i>Delete</button>
+      </div>
+      <h1 ng-if="formCtrl.formData._id">Edit {{ formCtrl.formData.name }}</h1>
+      <h1 ng-if="!formCtrl.formData._id">Add Product Group</h1>
+    </div>
+    <div ng-if="formCtrl.success" class="alert alert-success" ng-bind-html="formCtrl.trustHtml(formCtrl.success)"></div>
+    <div ng-if="formCtrl.error" class="alert alert-danger">
+      <p ng-bind-html="formCtrl.trustHtml(formCtrl.error)"></p>
+      <p ng-if="formCtrl.needsLogin"><a href ng-click="appCtrl.openLoginModal()" class="btn btn-primary">Editor Log In</a></p>
+    </div>
+    <form name="productGroupForm" class="form-horizontal" ng-submit="formCtrl.submit()" novalidate>
+
+      <input type="hidden" name="productGroupId" value="{{ formCtrl.formData._id }}">
+
+      <div class="form-group" ng-class="{'has-error': productGroupForm.productGroupName.$touched && productGroupForm.productGroupName.$invalid}">
+        <label class="col-sm-2 control-label">
+          Product Group Name:
+        </label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text" name="productGroupName" ng-model="formCtrl.formData.name" placeholder="(required)" required>
+          <div ng-show="productGroupForm.productGroupName.$touched && productGroupForm.productGroupName.$invalid" class="help-block">
+            Product Group Name is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Order:</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text" name="order" ng-model="formCtrl.formData.order">
+          <div class="help-block">
+            Zero (0) has highest priority.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button ng-if="formCtrl.formData._id" class="btn btn-primary btn-lg" type="submit" ng-disabled="productGroupForm.$invalid"><i class="fa fa-save"></i>Save</button>
+          <button ng-if="!formCtrl.formData._id" class="btn btn-primary btn-lg" type="submit" ng-disabled="productGroupForm.$invalid"><i class="fa fa-plus"></i>Add Product Group</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div ng-if="::!formCtrl.isVisible" class="alert alert-warning">
+    You are not authorized to view this page.
+  </div>
+</div>

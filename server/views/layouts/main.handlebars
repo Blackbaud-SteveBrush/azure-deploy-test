@@ -2,8 +2,68 @@
 <html>
     <head>
         <title>{{title}}</title>
+        <link rel="stylesheet" href="https://sky.blackbaudcdn.net/skyux/1.5.11/css/sky-bundle.css">
+        <!-- <link rel="stylesheet" href="/libs/sky/sky-bundle.css"> -->
+        <link rel="stylesheet" href="/css/app.min.css">
     </head>
-    <body>
-        <h1>Hello, World!</h1>
+    <body ng-app="{{ angularApp }}" ng-cloak>
+        <div class="page" ng-controller="AppController as appCtrl">
+            <bb-omnibar></bb-omnibar>
+            <header id="header" class="navbar navbar-inverse bb-navbar">
+                <div class="container">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li ui-sref-active="bb-navbar-active">
+                            <a href ui-sref="home">Home</a>
+                        </li>
+                    </ul>
+                    <div class="btn-group navbar-right" ng-if="::appCtrl.isAuthorized('CREATE_CAPABILITY')">
+                        <button type="button" class="btn btn-default dropdown-toggle navbar-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-cog"></i> <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li ui-sref-active="bb-navbar-active" ng-if="::appCtrl.isAuthorized('CREATE_CAPABILITY')">
+                                <a href ui-sref="capability-form(::{ capabilityId: null })">Add Capability</a>
+                            </li>
+                            <li ui-sref-active="bb-navbar-active" ng-if="::appCtrl.isAuthorized('CREATE_PRODUCT')">
+                                <a href ui-sref="product-form(::{ productId: null })">Add Product</a>
+                            </li>
+                            <li ui-sref-active="bb-navbar-active" ng-if="::appCtrl.isAuthorized('CREATE_PAGE')">
+                                <a href ui-sref="page-form(::{ pageId: null })">Add Page</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li ui-sref-active="bb-navbar-active" ng-if="::appCtrl.isAuthorized('CREATE_CAPABILITY_GROUP')">
+                                <a href ui-sref="capability-group-form(::{ capabilityGroupId: null })">Add Capability Group</a>
+                            </li>
+                            <li ui-sref-active="bb-navbar-active" ng-if="::appCtrl.isAuthorized('CREATE_PRODUCT_GROUP')">
+                                <a href ui-sref="product-group-form(::{ productGroupId: null })">Add Product Group</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+            <div id="content">
+                <div class="container">
+                    <cc-breadcrumbs></cc-breadcrumbs>
+                    {{{ body }}}
+                    <ui-view></ui-view>
+                </div>
+            </div>
+            <footer id="footer">
+                <div class="container">
+                    <ul>
+                        <li ng-if="!appCtrl.isAuthenticated()">
+                            <a href ui-sref="login">Editor log in</a>
+                        </li>
+                        <li ng-if="appCtrl.isAuthenticated()">
+                            <a href ng-click="appCtrl.logout()">Editor log out</a>
+                        </li>
+                    </ul>
+                </div>
+            </footer>
+        </div>
+
+        <!-- <script src="/libs/sky/sky-bundle.min.js"></script> -->
+        <script src="https://sky.blackbaudcdn.net/skyux/1.5.11/js/sky-bundle.min.js"></script>
+        <script src="/js/app.js"></script>
     </body>
 </html>

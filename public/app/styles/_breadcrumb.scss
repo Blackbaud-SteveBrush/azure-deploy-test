@@ -1,0 +1,22 @@
+#wrap-breadcrumbs {
+    margin: 0 0 20px;
+
+    ul {
+        margin: 0;
+
+        &:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        > li {
+            float: left;
+            display: block;
+
+            & + li:before {
+                content: "/";
+            }
+        }
+    }
+}

@@ -1,0 +1,10 @@
+<div class="popover-content">
+  <ul class="badge-list">
+    <li ng-repeat="product in ::capability.products">
+      <a href class="{{:: product.class }}" bb-popover-template="../public/app/components/popovers/product-comment.html" data-popover-title="{{:: product.adoptionStatus.name }}">
+        <span class="badge-list-name" ng-bind="::product.name"></span>
+        <span class="badge-list-description" ng-bind="::product.adoptionStatus.name"></span>
+      </a>
+    </li>
+  </ul>
+</div>

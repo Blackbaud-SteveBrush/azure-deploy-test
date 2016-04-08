@@ -1,0 +1,19 @@
+.md-editor {
+    > textarea {
+        padding: 15px;
+        min-height: 250px;
+
+        &:focus {
+            outline: none !important;
+            border: 0;
+        }
+    }
+
+    > .md-preview {
+        padding: 15px;
+    }
+
+    .btn > .fa {
+        margin: 0;
+    }
+}

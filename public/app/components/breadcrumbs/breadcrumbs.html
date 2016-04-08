@@ -1,0 +1,10 @@
+<div id="wrap-breadcrumbs" ng-if="breadcrumbsCtrl.breadcrumbs.length > 0">
+  <ul class="breadcrumb">
+    <li>
+      <a href ui-sref="home">Home</a>
+    </li>
+    <li ng-repeat="breadcrumb in ::breadcrumbsCtrl.breadcrumbs track by $index">
+      <span ng-if="$last">{{:: breadcrumb.name }}</span><a ng-if="!$last" ng-href="{{:: breadcrumb.href }}">{{:: breadcrumb.name }}</a>
+    </li>
+  </ul>
+</div>

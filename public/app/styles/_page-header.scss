@@ -1,0 +1,23 @@
+.page-header {
+    position: relative;
+    border-bottom: 1px solid #ddd;
+    padding: 0 0 20px;
+    margin: 0 0 20px;
+
+    h1 {
+        margin: 0;
+    }
+
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .controls {
+        float: right;
+        white-space: nowrap;
+        margin-left: 20px;
+        margin-top: 5px;
+    }
+}

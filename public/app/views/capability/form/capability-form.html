@@ -1,0 +1,279 @@
+<div ng-if="::formCtrl.isReady">
+  <div ng-if="::formCtrl.isVisible" class="capability-form-wrapper">
+    <div class="page-header" bb-scroll-into-view="formCtrl.scrollToTop">
+      <div class="controls">
+        <button ng-if="::formCtrl.formData._id && appCtrl.isAuthorized('DELETE_CAPABILITY')" class="btn btn-danger" type="button" cc-confirm-click data-confirmed-click="formCtrl.delete()"><i class="fa fa-trash"></i>Delete</button>
+      </div>
+      <h1 ng-if="formCtrl.formData._id">Edit {{ formCtrl.formData.name }}</h1>
+      <h1 ng-if="!formCtrl.formData._id">Add Capability</h1>
+    </div>
+    <div ng-if="formCtrl.success" class="alert alert-success" ng-bind-html="formCtrl.trustHtml(formCtrl.success)"></div>
+    <div ng-if="formCtrl.error" class="alert alert-danger">
+      <p ng-bind-html="formCtrl.trustHtml(formCtrl.error)"></p>
+      <p ng-if="formCtrl.needsLogin"><a href ng-click="appCtrl.openLoginModal()" class="btn btn-primary">Editor Log In</a></p>
+    </div>
+    <form name="capabilityForm" class="form-horizontal" ng-submit="formCtrl.submit()" novalidate>
+
+      <input type="hidden" name="capabilityId" value="{{ formCtrl.formData._id }}">
+
+      <div ng-if="::formCtrl.isFieldAuthorized" class="form-group" ng-class="{'has-error': capabilityForm.capabilityName.$touched && capabilityForm.capabilityName.$invalid}">
+        <label class="col-sm-2 control-label">
+          Capability Name:
+        </label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" name="capabilityName" ng-model="formCtrl.formData.name" placeholder="(required)" required>
+            <div ng-show="capabilityForm.capabilityName.$touched && capabilityForm.capabilityName.$invalid" class="help-block">
+              Capability Name is required.
+            </div>
+        </div>
+      </div>
+
+      <div ng-if="::formCtrl.isFieldAuthorized" class="form-group" ng-class="{'has-error': capabilityForm.shortname.$touched && capabilityForm.shortname.$invalid}">
+        <label class="col-sm-2 control-label">
+          Short Name:
+        </label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" name="shortname" ng-model="formCtrl.formData.shortname" placeholder="(required)" required>
+            <div ng-show="capabilityForm.shortname.$touched && capabilityForm.shortname.$invalid" class="help-block">
+              Capability Short Name is required.
+            </div>
+            <div ng-hide="capabilityForm.shortname.$touched && capabilityForm.shortname.$invalid" class="help-block">
+              Displayed on lists, badges, or when an informal reference is preferred.
+            </div>
+        </div>
+      </div>
+
+      <div ng-if="::formCtrl.isFieldAuthorized" class="form-group">
+        <label class="col-sm-2 control-label">
+          Description:
+        </label>
+        <div class="col-sm-10">
+          <textarea class="form-control" ng-model="formCtrl.formData.description"></textarea>
+        </div>
+      </div>
+
+      <div ng-if="::formCtrl.isFieldAuthorized && formCtrl.formData._id" class="form-group">
+        <label class="col-sm-2 control-label">Order:</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text" name="order" ng-model="formCtrl.formData.order">
+          <div class="help-block">
+            Zero (0) has highest priority.
+          </div>
+        </div>
+      </div>
+
+      <div ng-if="::formCtrl.isFieldAuthorized" class="form-group">
+        <label class="col-sm-2 control-label">
+          Development State:
+        </label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="formCtrl.formData.developmentState">
+            <option value="">
+              --- Select ---
+            </option>
+            <option ng-repeat="option in formCtrl.developmentStateOptions" value="{{:: option.value }}" ng-selected="formCtrl.formData.developmentState === option.value">
+              {{:: option.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div ng-if="::formCtrl.isFieldAuthorized" class="form-group">
+        <label class="col-sm-2 control-label">
+          Group:
+        </label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="formCtrl.formData.capabilityGroupId">
+            <option value="">
+              --- Select ---
+            </option>
+            <option ng-repeat="option in formCtrl.groupOptions" value="{{:: option.value }}" ng-selected="formCtrl.formData.capabilityGroupId === option.value">
+              {{:: option.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div ng-if="::formCtrl.isFieldAuthorized" class="form-group">
+        <label class="col-sm-2 control-label">
+          Capability Type:
+        </label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="formCtrl.formData.capabilityType">
+            <option value="">
+              --- Select ---
+            </option>
+            <option ng-repeat="option in formCtrl.typeOptions" value="{{:: option.value }}" ng-selected="formCtrl.formData.capabilityType === option.value">
+              {{:: option.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div ng-if="::formCtrl.isFieldAuthorized" class="form-group">
+        <label class="col-sm-2 control-label">
+          Abbreviation(s):
+        </label>
+        <div class="col-sm-10">
+          <div ng-repeat="nickname in formCtrl.formData.nicknames track by $index" class="form-group-list-item">
+            <div class="row">
+              <div class="col-sm-10">
+                <div class="form-group">
+                  <input class="form-control" type="text" ng-model="formCtrl.formData.nicknames[$index]">
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <button type="button" class="btn btn-danger btn-sm btn-block" ng-click="formCtrl.removeNickname($index)">Remove</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-link" ng-click="formCtrl.addNickname()"><i class="fa fa-plus"></i> Add Abbreviation</button>
+        </div>
+      </div>
+
+      <div ng-if="::formCtrl.isFieldAuthorized" class="form-group">
+        <label class="col-sm-2 control-label">
+          Owner(s):
+        </label>
+        <div class="col-sm-10">
+          <div ng-repeat="owner in formCtrl.formData.owners" class="form-group-list-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label>Name:</label>
+                  <input class="form-control" type="text" ng-model="owner.name">
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label>Role:</label>
+                  <select class="form-control" ng-model="owner.role">
+                    <option value="">
+                      --- Select ---
+                    </option>
+                    <option ng-repeat="option in formCtrl.roleOptions" value="{{:: option.value }}" ng-selected="owner.role === option.value">
+                      {{:: option.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label>MeeBee Profile:</label>
+                  <input class="form-control" type="text" ng-model="owner.profileUrl" placeholder="http://">
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <label>&nbsp;</label>
+                  <button type="button" class="btn btn-danger btn-sm btn-block" ng-click="formCtrl.removeOwner($index)">Remove</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-link" ng-click="formCtrl.addOwner()"><i class="fa fa-plus"></i> Add Owner</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">
+          Product(s):
+        </label>
+        <div class="col-sm-10">
+          <div ng-repeat="product in formCtrl.formData.products" class="form-group-list-item">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label>Product:</label>
+                  <select class="form-control" ng-model="product.name" ng-change="formCtrl.updateProductName($index)">
+                    <option value="">--- Select ---</option>
+                    <option ng-repeat="option in formCtrl.productOptions" value="{{:: option.value }}" ng-selected="product.name === option.value">
+                      {{:: option.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label>Adoption Status:</label>
+                  <select class="form-control" ng-model="product.adoptionStatus.adoptionStatusId">
+                    <option value="">--- Select ---</option>
+                    <option ng-repeat="option in formCtrl.adoptionStatusOptions" value="{{:: option.value }}" ng-selected="product.adoptionStatus.adoptionStatusId === option.value">
+                      {{:: option.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <label>&nbsp;</label>
+                  <button type="button" class="btn btn-danger btn-sm btn-block" ng-click="formCtrl.removeProduct($index)">Remove</button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-10">
+                <div class="form-group">
+                  <label>Comment:</label>
+                  <textarea class="form-control" ng-model="product.comment"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-link" ng-click="formCtrl.addProduct()"><i class="fa fa-plus"></i> Add Product</button>
+        </div>
+      </div>
+
+      <div ng-if="::formCtrl.isFieldAuthorized" class="form-group">
+        <label class="col-sm-2 control-label">
+          Website(s):
+        </label>
+        <div class="col-sm-10">
+          <div ng-repeat="website in formCtrl.formData.websites" class="form-group-list-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label>Name:</label>
+                  <input class="form-control" type="text" ng-model="website.name">
+                </div>
+              </div>
+              <div class="col-sm-5">
+                <div class="form-group">
+                  <label>Full URL:</label>
+                  <input class="form-control" type="text" ng-model="website.url" placeholder="http://">
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <label></label>
+                  <div class="checkbox">
+                    <label><input type="checkbox" ng-model="website.isPrivate" ng-checked="website.isPrivate"> Private</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <label>&nbsp;</label>
+                  <button type="button" class="btn btn-danger btn-sm btn-block" ng-click="formCtrl.removeWebsite($index)">Remove</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-link" ng-click="formCtrl.addWebsite()"><i class="fa fa-plus"></i> Add Website</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button ng-if="formCtrl.formData._id" class="btn btn-primary btn-lg" type="submit" ng-disabled="capabilityForm.$invalid"><i class="fa fa-save"></i>Save</button>
+          <button ng-if="!formCtrl.formData._id" class="btn btn-primary btn-lg" type="submit" ng-disabled="capabilityForm.$invalid"><i class="fa fa-plus"></i>Add Capability</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div ng-if="::!formCtrl.isVisible" class="alert alert-warning">
+    You are not authorized to view this page.
+  </div>
+</div>

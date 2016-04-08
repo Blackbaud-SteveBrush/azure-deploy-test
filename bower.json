@@ -1,0 +1,29 @@
+{
+  "name": "shared-capabilities",
+  "description": "Prototype to create a data-driven view for Blackbaud's Shared Capabilities Catalog",
+  "main": "index.js",
+  "authors": [
+    "Blackbaud-SteveBrush"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Blackbaud-SteveBrush/shared-capabilities",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-ui-router": "^0.2.18",
+    "angular-sanitize": "^1.5.1",
+    "angular-local-storage": "^0.2.7",
+    "bootstrap-markdown": "git://github.com/toopay/bootstrap-markdown.git",
+    "to-markdown": "git://github.com/domchristie/to-markdown.git",
+    "marked": "git://github.com/cadorn/marked.git",
+    "jquery-hotkeys": "git://github.com/jeresig/jquery.hotkeys.git",
+    "sortable": "git://github.com/RubaXa/Sortable.git"
+  }
+}

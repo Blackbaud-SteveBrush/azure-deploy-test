@@ -1,0 +1,37 @@
+#nav-sidebar {
+    padding: 0 0 20px;
+
+    .nav-sidebar-title {
+        font-size: 15px;
+        margin: 6px 0 10px;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        > li {
+            width: 100%;
+            display: block;
+            float: left;
+
+            > a {
+                display: block;
+                color: #8c8f90;
+                border-left: transparent solid 5px;
+                margin: 0 0 10px 5px;
+                padding: 0 5px;
+                word-break: break-word;
+
+                &:hover {
+                    color: #2f4050;
+                }
+            }
+
+            &.active > a {
+                border-left-color: #1c84c6;
+            }
+        }
+    }
+}

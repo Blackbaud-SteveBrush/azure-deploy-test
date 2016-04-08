@@ -1,0 +1,116 @@
+#content {
+    background-color: #fff;
+    padding: 20px 0 40px;
+}
+
+#header {
+    .btn-group {
+        margin-right: 0;
+
+        > .btn:first-child {
+            border-color: transparent;
+        }
+    }
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+.bullet {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: 7px;
+}
+
+bb-omnibar + header {
+    margin-top: 50px;
+}
+
+@media (min-width: 768px) {
+    .table-responsive {
+        overflow: visible;
+    }
+}
+
+.navbar {
+    .navbar-brand {
+        color: #fff;
+
+        &:hover {
+            color: #fff;
+        }
+    }
+}
+
+.bb-context-menu {
+    display: inline-block;
+}
+
+.detail-page {
+    position: relative;
+
+    .nicknames {
+        overflow: hidden;
+
+        .nickname {}
+
+        .nickname + .nickname {
+            &:before {
+                content: ", ";
+            }
+        }
+    }
+
+    .details {
+        margin: 15px 0;
+        padding: 15px;
+        box-shadow: none;
+        border: 0;
+        border-radius: 0;
+
+        .table {
+            width: 100%;
+            margin: 0;
+
+            > tbody {
+                > tr {
+                    > th,
+                    > td {
+                        border: 0;
+                    }
+                    > th {
+                        width: 1px;
+                        white-space: nowrap;
+                        font-weight: normal;
+                        padding-left: 0;
+                        color: #888;
+                    }
+                }
+            }
+        }
+    }
+
+    .nav-websites {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        > li {}
+    }
+}
+
+@import "_badges";
+@import "_bootstrap-markdown";
+@import "_buttons";
+@import "_breadcrumb";
+@import "_chart";
+@import "_footer";
+@import "_forms";
+@import "_ng-sortable";
+@import "_page-header";
+@import "_showcase";
+@import "_sidebar";
+@import "_tables";

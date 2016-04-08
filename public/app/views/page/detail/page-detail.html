@@ -1,0 +1,29 @@
+<div ng-if="::pageCtrl.isReady">
+  <div class="page-detail" ng-if="::pageCtrl.isVisible">
+    <div class="row">
+      <main class="col-sm-10 col-sm-push-2">
+        <div class="page-header">
+          <div class="controls">
+            <button class="btn btn-default" ng-if="::appCtrl.isAuthorized('EDIT_PAGE:PARTIAL')" ui-sref="page-form({ capabilityId: pageCtrl.page.capability._id, pageId: pageCtrl.page._id })"><i class="fa fa-pencil"></i> Edit</button>
+          </div>
+          <h1 ng-bind="::pageCtrl.page.title"></h1>
+        </div>
+        <p ng-if="::!pageCtrl.page.isPublished" class="alert alert-warning">This page is not published.</p>
+        <div class="content" ng-bind-html="::pageCtrl.page.content.markup"></div>
+      </main>
+      <aside class="col-sm-2 col-sm-pull-10">
+        <nav id="nav-sidebar">
+          <h4 class="nav-sidebar-title" ng-bind="::pageCtrl.page.capability.name"></h4>
+          <ul>
+            <li ng-repeat="page in ::pageCtrl.page.capability.pages" ui-sref-active="active" ng-if="::page.isPublished || (!page.isPublished && appCtrl.isAuthenticated())">
+              <a href ui-sref="page(::{ capabilitySlug: pageCtrl.page.capability.slug, pageSlug: page.slug })">{{:: page.title }}</a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+    </div>
+  </div>
+  <div ng-if="::!pageCtrl.isVisible" class="alert alert-warning">
+    The page you are attempting to view is not published.
+  </div>
+</div>

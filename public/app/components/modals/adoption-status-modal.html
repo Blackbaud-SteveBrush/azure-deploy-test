@@ -1,0 +1,36 @@
+<bb-modal>
+  <div class="modal-wrapper">
+    <bb-modal-header>{{:: modalCtrl.data.title }}</bb-modal-header>
+    <div bb-modal-body>
+      <table class="table table-striped table-condensed" style="margin:0;">
+        <thead>
+          <tr>
+            <th>
+              Product
+            </th>
+            <th>
+              Status
+            </th>
+            <th>
+              Comment(s)
+            </th>
+          </tr>
+        </thead>
+        <tr ng-repeat="product in ::modalCtrl.data.model">
+          <td style="white-space: nowrap;">
+            <span ng-bind="::product.name"></span>
+          </td>
+          <td style="white-space: nowrap;">
+            <span class="bullet {{:: product.class }}"></span><span ng-bind="::product.adoptionStatus.name"></span>
+          </td>
+          <td>
+            <p ng-bind-html="::product.comment"></p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <bb-modal-footer>
+      <button ng-click="$close()" class="btn btn-default">Close</button>
+    </bb-modal-footer>
+  </div>
+</bb-modal>

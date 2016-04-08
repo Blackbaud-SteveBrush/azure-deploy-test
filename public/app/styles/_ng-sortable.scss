@@ -1,0 +1,32 @@
+.handle {
+    cursor: move;
+    display: inline-block;
+    margin-left: 6px;
+    padding: 0;
+    background: #fff;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    line-height: 23px;
+    border: 1px solid #c1c1c1;
+    text-align: center;
+}
+
+ul[dnd-list],
+ul[dnd-list] > li,
+tbody[dnd-list],
+tbody[dnd-list] > tr,
+tbody[dnd-list] > tr > td {
+    position: relative;
+    cursor: move;
+}
+
+tr.dndDraggingSource {
+    
+}
+
+tr.dndPlaceholder {
+    > td {
+        background-color: #ddd;
+    }
+}

@@ -1,0 +1,33 @@
+<div bb-scroll-into-view="formCtrl.scrollToTop">
+  <div ng-if="formCtrl.success" class="alert alert-success" ng-bind-html="formCtrl.trustHtml(formCtrl.success)"></div>
+  <div ng-if="formCtrl.error" class="alert alert-danger" ng-bind-html="formCtrl.trustHtml(formCtrl.error)"></div>
+  <form name="loginForm" id="form-login" class="form-horizontal" ng-submit="formCtrl.submit()" method="post" novalidate>
+    <div class="form-group" ng-class="{'has-error': loginForm.emailAddress.$touched && loginForm.emailAddress.$invalid}">
+      <label class="col-sm-2 control-label">
+        Email Address:
+      </label>
+      <div class="col-sm-10">
+          <input class="form-control" type="text" name="emailAddress" ng-model="formCtrl.formData.emailAddress" placeholder="(required)" required>
+          <div ng-show="loginForm.emailAddress.$touched && loginForm.emailAddress.$invalid" class="help-block">
+            Email Address is required.
+          </div>
+      </div>
+    </div>
+    <div class="form-group" ng-class="{'has-error': loginForm.passphrase.$touched && loginForm.passphrase.$invalid}">
+      <label class="col-sm-2 control-label">
+        Passphrase:
+      </label>
+      <div class="col-sm-10">
+          <input class="form-control" type="password" name="passphrase" ng-model="formCtrl.formData.passphrase" placeholder="(required)" required>
+          <div ng-show="loginForm.passphrase.$touched && loginForm.passphrase.$invalid" class="help-block">
+            Passphrase is required.
+          </div>
+      </div>
+    </div>
+    <div class="form-group form-buttons">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button class="btn btn-primary btn-lg" id="login-form-button" type="submit" ng-disabled="loginForm.$invalid"><i class="fa fa-login"></i>Log In</button>
+      </div>
+    </div>
+  </form>
+</div>

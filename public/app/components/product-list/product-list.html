@@ -1,0 +1,50 @@
+<h1>Adopted Capabilities By Product</h1>
+<p ng-if="::appCtrl.isAuthorized('CREATE_PRODUCT_GROUP')">
+  <a class="btn btn-default" href ui-sref="product-group-form"><i class="fa fa-plus"></i>Add Product Group</a></span>
+</p>
+<div class="table-list">
+  <div class="table-list-item" ng-repeat="productGroup in ::listCtrl.products" ng-if="::productGroup.products.length || appCtrl.isAuthorized('CREATE_PRODUCT')">
+    <div class="table-list-heading">
+      <h2 class="table-list-title" ng-bind="::productGroup.name"></h2>
+      <div class="controls" ng-if="::appCtrl.isAuthorized('EDIT_PRODUCT_GROUP') && productGroup._id">
+        <a href ui-sref="product-group-form(::{ productGroupId: productGroup._id })">Edit</a>
+      </div>
+      <p ng-if="::appCtrl.isAuthorized('CREATE_PRODUCT')">
+        <a class="btn btn-default" href ui-sref="product-form({ productGroupId: productGroup._id })"><i class="fa fa-plus"></i>Add Product</a></span>
+      </p>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th class="name">
+              Product
+            </th>
+            <th class="stats" colspan="2">
+              Capabilities Adopted and Status
+            </th>
+          </tr>
+        </thead>
+        <tbody ng-sortable="productGroup.sortConfig">
+          <tr ng-class="::{ draggable: appCtrl.isAuthorized('EDIT_PRODUCT:FULL') }" ng-repeat="product in productGroup.products">
+            <td class="name" ng-bind="::product.name"></td>
+            <td class="stats">
+              <a class="chart" href ng-click="listCtrl.openModal('Capabilities Adopted by ' + product.name, product)">
+                <div ng-repeat="total in ::product.totals" class="bar {{:: total.class }}" style="width:{{:: total.count * 40 }}px;" title="{{:: total.model.adoptionStatus.name }}">
+                </div>
+              </a>
+            </td>
+            <td class="controls" ng-if="::appCtrl.isAuthorized('EDIT_PRODUCT:PARTIAL')">
+              <bb-context-menu>
+                <li>
+                  <a href ui-sref="product-form(::{ productId: product._id })"><i class="fa fa-pencil"></i> Edit</a>
+                </li>
+              </bb-context-menu>
+              <span class="handle"><i class="fa fa-sort"></i></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

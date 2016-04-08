@@ -1,0 +1,35 @@
+.showcase {
+    a.showcase-item {
+        color: #292a2b;
+        display: block;
+
+        &.muted {
+
+            > .panel {
+                border-style: dashed;
+            }
+        }
+
+        .media-left {
+            padding-right: 20px;
+        }
+
+        &:hover {
+            > .panel {
+                box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+            }
+        }
+
+        .panel-heading {
+            > .panel-title {
+                display: inline-block;
+                > .fa {
+                    opacity: .68;
+                }
+            }
+            > .controls {
+                float: right;
+            }
+        }
+    }
+}

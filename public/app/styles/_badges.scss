@@ -1,0 +1,64 @@
+ul.badge-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    &:after,
+    &:before {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    > li,
+    > li > a,
+    > li > a > span {
+        font-size: 11px;
+        line-height: 18px;
+        white-space: nowrap;
+        display: inline-block;
+    }
+
+    > li {
+        display: block;
+        float: left;
+        clear: right;
+        margin: 0 5px 5px 0;
+
+        > a {
+            color: #fff;
+            box-shadow: 0 1px 1px #fff;
+            border-radius: 2px;
+
+            > span {
+
+                 &.badge-list-name {
+                    background-color: #333;
+                    padding-left: 6px;
+                    padding-right: 6px;
+                    border-radius: 2px 0 0 2px;
+                }
+                &.badge-list-description {
+                    padding-right: 6px;
+                    padding-left: 2px;
+                    border-radius: 0 2px 2px 0;
+                }
+            }
+        }
+    }
+}
+.status-0 {
+    background-color: #8cbe4f;
+}
+.status-1 {
+    background-color: #bed13b;
+}
+.status-2 {
+    background-color: #1c84c6;
+}
+.status-3 {
+    background-color: #eacc23;
+}
+.status-4 {
+    background-color: #fca210;
+}

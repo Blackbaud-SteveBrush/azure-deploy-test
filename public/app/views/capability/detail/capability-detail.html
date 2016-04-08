@@ -1,0 +1,98 @@
+<div class="detail-page capability-detail-wrapper">
+  <div class="page-header">
+    <div class="controls">
+      <a class="btn btn-default" ng-if="::appCtrl.isAuthorized('EDIT_CAPABILITY:PARTIAL')" ui-sref="capability-form({ capabilityId: detailCtrl.capability._id })" href><i class="fa fa-pencil"></i>Edit</a>
+      <a class="btn btn-default" ng-if="::appCtrl.isAuthorized('CREATE_PAGE')" ui-sref="page-form({ capabilityId: detailCtrl.capability._id })" href><i class="fa fa-file-text-o"></i>Add Page</a>
+    </div>
+    <h1>
+      <span ng-bind="::detailCtrl.capability.name"></span>
+      <span ng-if="detailCtrl.capability.nicknames.length" class="nicknames">(<span class="nickname" ng-repeat="nickname in ::detailCtrl.capability.nicknames" ng-bind="::nickname"></span>)</span>
+    </h1>
+  </div>
+  <div class="details well">
+    <div class="table-responsive">
+      <table class="table table-condensed">
+        <tr>
+          <th>
+            Capability Type:
+          </th>
+          <td ng-bind="::detailCtrl.capability.capabilityType"></td>
+        </tr>
+        <tr>
+          <th>
+            Development State:
+          </th>
+          <td ng-bind="::detailCtrl.capability.developmentState"></td>
+        </tr>
+        <tr>
+          <th>
+            Owner(s):
+          </th>
+          <td>
+            <div ng-repeat="owner in ::detailCtrl.capability.owners">
+              <a ng-if="owner.profileUrl" href="{{:: owner.profileUrl }}" target="_blank" ng-bind="::owner.name"></a>
+              <span ng-if="!owner.profileUrl" ng-bind="::owner.name"></span>
+              <span ng-if="owner.role" class="text-muted">({{:: owner.role }})</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Related Website(s):
+          </th>
+          <td>
+            <ul class="nav-websites" ng-if="::detailCtrl.capability.websites.length">
+              <li ng-repeat="website in ::detailCtrl.capability.websites">
+                <a href="{{:: website.url }}" target="_blank" ng-bind="::website.name"></a>
+                <i class="fa fa-eye-slash" ng-if="::website.isPrivate" title="Website is private."></i>
+              </li>
+            </ul>
+            <span ng-if="::!detailCtrl.capability.websites.length">None</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <p ng-bind-html="::detailCtrl.capability.description"></p>
+  <h2>Product List</h2>
+  <p>
+    List of products consuming <span ng-bind="::detailCtrl.capability.name"></span>:
+  </p>
+  <ul class="badge-list">
+    <li ng-repeat="product in ::detailCtrl.capability.products">
+      <a href class="{{:: product.class }}" bb-popover-template="../public/app/components/popovers/product-comment.html" data-popover-title="{{:: product.adoptionStatus.name }}">
+        <span class="badge-list-name" ng-bind="::product.name"></span>
+        <span class="badge-list-description" ng-bind="::product.adoptionStatus.name"></span>
+      </a>
+    </li>
+  </ul>
+  <h2>Technical Requirements</h2>
+  <p>
+    This section will contain a listing of technical non-functional requirements and descriptions on how the <span ng-bind="::detailCtrl.capability.name"></span> fulfills those requirements.
+  </p>
+  <div ng-if="detailCtrl.capability.numPublicPages > 0">
+    <h2>Learn More</h2>
+    <div class="showcase">
+      <div class="row" ng-sortable="detailCtrl.sortConfig">
+        <div class="draggable col-xl-3 col-lg-4 col-md-4 col-sm-4 col-xs-6" ng-repeat="page in detailCtrl.capability.pages" ng-if="::page.isPublished || (!page.isPublished && appCtrl.isAuthenticated())">
+          <a href ui-sref="page(::{ capabilitySlug: detailCtrl.capability.slug, pageSlug: page.slug })" class="showcase-item" ng-class="::{ 'muted': !page.isPublished }">
+        		<div class="panel panel-default">
+        			<div class="panel-heading">
+        				<h3 class="panel-title"><span ng-bind="::page.title"></span> <span class="fa fa-eye-slash" ng-if="::!page.isPublished" title="This page is not published.">&nbsp;</span></h3>
+        			</div>
+        			<div class="panel-body">
+                <div class="media">
+                  <div class="media-left">
+                    <i class="showcase-icon fa fa-2x {{:: page.icon}}"></i>
+                  </div>
+                  <div class="media-body showcase-description" ng-bind-html="::page.summary">
+                  </div>
+                </div>
+        			</div>
+        		</div>
+        	</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

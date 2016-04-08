@@ -12,12 +12,10 @@
     };
 
     routes.index = function (req, res, next) {
-        //router.get('/', function (req, res, next) {
-            res.render('home', {
-                angularApp: 'capabilities-catalog',
-                title: 'Capabilities Catalog'
-            });
-        //});
+        res.render('home', {
+            angularApp: 'capabilities-catalog',
+            title: 'Capabilities Catalog'
+        });
     };
 
     routes.api = {

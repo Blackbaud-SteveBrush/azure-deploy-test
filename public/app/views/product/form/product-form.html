@@ -1,0 +1,88 @@
+<div ng-if="::formCtrl.isReady">
+  <div ng-if="::formCtrl.isVisible" class="product-form-wrapper">
+    <div class="page-header" bb-scroll-into-view="formCtrl.scrollToTop">
+      <div class="controls">
+        <button ng-if="::formCtrl.formData._id && appCtrl.isAuthorized('DELETE_PRODUCT')" class="btn btn-danger" type="button" cc-confirm-click data-confirmed-click="formCtrl.delete()"><i class="fa fa-trash"></i>Delete</button>
+      </div>
+      <h1 ng-if="formCtrl.formData._id">Edit {{ formCtrl.formData.name }}</h1>
+      <h1 ng-if="!formCtrl.formData._id">Add Product</h1>
+    </div>
+  <div ng-if="formCtrl.success" class="alert alert-success" ng-bind-html="formCtrl.trustHtml(formCtrl.success)"></div>
+    <div ng-if="formCtrl.error" class="alert alert-danger">
+      <p ng-bind-html="formCtrl.trustHtml(formCtrl.error)"></p>
+      <p ng-if="formCtrl.needsLogin"><a href ng-click="appCtrl.openLoginModal()" class="btn btn-primary">Editor Log In</a></p>
+    </div>
+    <form name="productForm" class="form-horizontal" ng-submit="formCtrl.submit()" novalidate>
+      <input type="hidden" name="productId" value="{{ formCtrl.formData._id }}">
+      <div class="form-group" ng-class="{'has-error': productForm.productName.$touched && productForm.productName.$invalid}">
+        <label class="col-sm-2 control-label">
+          Product Name:
+        </label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" name="productName" ng-model="formCtrl.formData.name" placeholder="(required)" required>
+            <div ng-show="productForm.productName.$touched && productForm.productName.$invalid" class="help-block">
+              Product Name is required.
+            </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">
+          Abbreviation(s):
+        </label>
+        <div class="col-sm-10">
+          <div ng-repeat="nickname in formCtrl.formData.nicknames track by $index" class="form-group-list-item">
+            <div class="row">
+              <div class="col-sm-10">
+                <div class="form-group">
+                  <input class="form-control" type="text" ng-model="formCtrl.formData.nicknames[$index]">
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <button type="button" class="btn btn-danger btn-sm btn-block" ng-click="formCtrl.removeNickname($index)">Remove</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-link" ng-click="formCtrl.addNickname()"><i class="fa fa-plus"></i> Add Abbreviation</button>
+        </div>
+      </div>
+
+      <div ng-if="formCtrl.formData._id" class="form-group">
+        <label class="col-sm-2 control-label">Order:</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text" name="order" ng-model="formCtrl.formData.order">
+          <div class="help-block">
+            Zero (0) has highest priority.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">
+          Group:
+        </label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="formCtrl.formData.productGroupId">
+            <option value="">
+              --- Select ---
+            </option>
+            <option ng-repeat="option in formCtrl.groupOptions" value="{{:: option.value }}" ng-selected="formCtrl.formData.productGroupId === option.value">
+              {{:: option.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button ng-if="formCtrl.formData._id" class="btn btn-primary btn-lg" type="submit" ng-disabled="productForm.$invalid"><i class="fa fa-save"></i>Save</button>
+          <button ng-if="!formCtrl.formData._id" class="btn btn-primary btn-lg" type="submit" ng-disabled="productForm.$invalid"><i class="fa fa-plus"></i>Add Product</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div ng-if="::!formCtrl.isVisible" class="alert alert-warning">
+    You are not authorized to view this page.
+  </div>
+</div>
