@@ -63,7 +63,7 @@
         });
     }
 
-    console.log("Credential Data:", credentialData);
+    console.log("Credential Data (requested):", credentialData);
 
     if (credentialData.accounts.length > 0) {
 
