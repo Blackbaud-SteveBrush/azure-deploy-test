@@ -2,6 +2,7 @@ var app,
     bodyParser,
     cookieParser,
     express,
+    handlebars,
     http,
     path,
     port,
@@ -14,6 +15,7 @@ cookieParser = require('cookie-parser');
 bodyParser = require('body-parser');
 routes = require('./routes/index');
 users = require('./routes/users');
+handlebars  = require('express-handlebars');
 http = require('http');
 path = require('path');
 
@@ -21,8 +23,12 @@ port = process.env.PORT || '3000';
 
 app = express();
 
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('views', path.join(__dirname, 'server', 'views'));
+app.set('view engine', 'handlebars');
+app.engine('handlebars', handlebars({
+    defaultLayout: 'main',
+    layoutsDir: path.join(__dirname, 'server', 'views', 'layouts')
+}));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
