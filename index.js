@@ -1,9 +1,12 @@
 var app,
     bodyParser,
     cookieParser,
+    Database,
+    database,
     express,
     handlebars,
     http,
+    mongoose,
     path,
     port,
     routes,
@@ -13,6 +16,8 @@ var app,
 express = require('express');
 cookieParser = require('cookie-parser');
 bodyParser = require('body-parser');
+mongoose = require('mongoose');
+Database = require('./server/database');
 routes = require('./routes/index');
 users = require('./routes/users');
 handlebars  = require('express-handlebars');
@@ -20,6 +25,10 @@ http = require('http');
 path = require('path');
 
 port = process.env.PORT || '3000';
+database = new Database({
+    databaseUri: process.env.DATABASE_URI || 'mongodb://localhost:27017/capabilities-catalog',
+    service: mongoose
+});
 
 app = express();
 
@@ -65,6 +74,9 @@ app.use(function (err, req, res, next) {
     });
 });
 
+database.connect(function () {
+    console.log("Database connected.");
+});
 app.set('port', port);
 server = http.createServer(app);
 server.listen(port);
