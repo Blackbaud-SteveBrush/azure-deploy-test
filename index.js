@@ -10,16 +10,14 @@ var app,
     path,
     port,
     routes,
-    server,
-    users;
+    server;
 
 express = require('express');
 cookieParser = require('cookie-parser');
 bodyParser = require('body-parser');
 mongoose = require('mongoose');
 Database = require('./server/database');
-routes = require('./routes/index');
-users = require('./routes/users');
+routes = require('./server/routes');
 handlebars  = require('express-handlebars');
 http = require('http');
 path = require('path');
@@ -44,8 +42,38 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+app.get('/', routes.index);
+app.get('/api/adoption-status', routes.api.adoptionStatus.getAdoptionStatuses);
+app.get('/api/product', routes.api.product.getProducts);
+app.get('/api/product/:productId', routes.api.product.getProduct);
+app.get('/api/product-group', routes.api.productGroup.getProductGroups);
+app.get('/api/product-group/:productGroupId', routes.api.productGroup.getProductGroup);
+app.get('/api/capability', routes.api.capability.getCapabilities);
+app.get('/api/capability/:capabilityId', routes.api.capability.getCapability);
+app.get('/api/capability-slug/:capabilitySlug', routes.api.capability.getCapabilityBySlug);
+app.get('/api/capability-group', routes.api.capabilityGroup.getCapabilityGroups);
+app.get('/api/capability-group/:capabilityGroupId', routes.api.capabilityGroup.getCapabilityGroup);
+app.get('/api/page/:pageId', routes.api.page.getPage);
+app.get('/api/page-slug/:pageSlug', routes.api.page.getPageBySlug);
+
+app.post('/api/product', routes.api.product.postProduct);
+app.post('/api/product-group', routes.api.productGroup.postProductGroup);
+app.post('/api/capability', routes.api.capability.postCapability);
+app.post('/api/capability-group', routes.api.capabilityGroup.postCapabilityGroup);
+app.post('/api/login', routes.api.authentication.login);
+app.post('/api/page/', routes.api.page.postPage);
+
+app.delete('/api/product/:productId', routes.api.product.deleteProduct);
+app.delete('/api/product-group/:productGroupId', routes.api.productGroup.deleteProductGroup);
+app.delete('/api/capability/:capabilityId', routes.api.capability.deleteCapability);
+app.delete('/api/capability-group/:capabilityGroupId', routes.api.capabilityGroup.deleteCapabilityGroup);
+app.delete('/api/page/:pageId', routes.api.page.deletePage);
+
+app.put('/api/capability/:capabilityId', routes.api.capability.updateCapability);
+app.put('/api/capability-group/:capabilityGroupId', routes.api.capabilityGroup.updateCapabilityGroup);
+app.put('/api/product/:productId', routes.api.product.updateProduct);
+app.put('/api/product-group/:productGroupId', routes.api.productGroup.updateProductGroup);
+app.put('/api/page/:pageId', routes.api.page.updatePage);
 
 // Catch 404 and forward to error handler
 app.use(function(req, res, next) {
